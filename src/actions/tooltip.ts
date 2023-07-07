@@ -14,10 +14,9 @@ export function tooltip(node: HTMLElement, tooltipTextStore: Writable<string>) {
 
     function mouseenter() {
         const { top, left, width } = node.getBoundingClientRect();
-        const scrollHeight = document.documentElement.scrollTop;
         tooltipElem = document.createElement('div');
-        tooltipElem.className = 'absolute -translate-y-full -translate-x-1/2 bg-gray-800 shadow text-xs text-white  px-2 py-1 rounded';
-        tooltipElem.style.top = `${top + scrollHeight - 10}px`;
+        tooltipElem.className = 'fixed -translate-y-full -translate-x-1/2 bg-gray-800 shadow text-xs text-white  px-2 py-1 rounded';
+        tooltipElem.style.top = `${top - 10}px`;
         tooltipElem.style.left = `${left + width / 2}px`;
         tooltipElem.textContent = get(tooltipTextStore) ?? null;
         document.body.appendChild(tooltipElem);
