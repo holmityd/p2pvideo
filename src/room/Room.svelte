@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { roomKeyStore, ownerStore, hostAlreadyConnectedStore } from './roomStore.js';
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
 
@@ -7,12 +7,18 @@
 	import Video from '../video/Video.svelte';
 	import RoomControl from './components/RoomControl.svelte';
 	import Chat from '../chat/Chat.svelte';
-	import { videoSourceStore } from '../video/videoStore.js';
+	import { videoElmStore, videoSourceStore } from '../video/videoStore.js';
+	import { VIDEO_SRC, VIDEO_TIME } from './localStorageKeys.js';
+	import { get } from 'svelte/store';
 
 	// peer
 	export let id: string | undefined = undefined;
 	onMount(() => {
 		roomKeyStore.set(id);
+
+		const videoSrcLS = localStorage.getItem(VIDEO_SRC);
+		if (videoSrcLS) videoSourceStore.set(videoSrcLS);
+
 		import('peerjs').then(({ Peer }) => {
 			initializePeer(Peer);
 		});
@@ -30,6 +36,9 @@
 			data: roomControlUrl
 		});
 		videoSourceStore.set(roomControlUrl);
+		localStorage.setItem(VIDEO_SRC, roomControlUrl);
+		console.log('why puuk');
+		localStorage.setItem(VIDEO_TIME, String(0));
 	}
 
 	let joined = false;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { formatTime, setVideoTime } from '../videoService';
+	import { VIDEO_TIME } from '../../room/localStorageKeys';
 
 	export let video: HTMLVideoElement;
 	export let canControl: boolean;
@@ -11,7 +12,27 @@
 	let progress = 0;
 	let bufferProgress = 0;
 
+	function createCooldownFunction(delay: number) {
+		let inProgress = false;
+
+		return function (fun: Function) {
+			if (inProgress) return;
+			inProgress = true;
+			setTimeout(() => {
+				fun();
+				inProgress = false;
+			}, delay);
+		};
+	}
+
+	const callMeEverySecondsOnly = createCooldownFunction(5000);
+
 	function updateProgress(): void {
+		if (!video.paused) {
+			callMeEverySecondsOnly(() => {
+				localStorage.setItem(VIDEO_TIME, String(video.currentTime));
+			});
+		}
 		progress = (video.currentTime / video.duration) * 100;
 	}
 

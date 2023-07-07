@@ -9,6 +9,7 @@
 	import FullscreenButton from './components/FullscreenButton.svelte';
 	import ProgressBar from './components/ProgressBar.svelte';
 	import Loading from './components/Loading.svelte';
+	import { VIDEO_TIME } from '../room/localStorageKeys';
 
 	export let src: string = '';
 	export let canControl: boolean = false;
@@ -19,6 +20,10 @@
 	onMount(() => {
 		videoElmStore.set(video);
 		video.controls = false;
+		video.addEventListener('loadeddata', () => {
+			const videoTimeLS = Number(localStorage.getItem(VIDEO_TIME));
+			if (videoTimeLS) video.currentTime = videoTimeLS;
+		});
 		video.addEventListener('play', () => videoPausedStore.set(false));
 		video.addEventListener('pause', () => videoPausedStore.set(true));
 	});
