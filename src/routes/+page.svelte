@@ -7,5 +7,5 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<a href="/test">test</a>
+<a href="./test">test</a>
 <Room />
