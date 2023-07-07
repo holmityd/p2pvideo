@@ -1,0 +1,18 @@
+<script lang="ts">
+	import { Icon, type IconSource } from 'svelte-hero-icons';
+	import { tooltip } from '../../actions/tooltip';
+	import type { Writable } from 'svelte/store';
+	export let onClick: (e?: MouseEvent) => void = () => {};
+	export let icon: IconSource;
+	export let tooltipText: Writable<string>;
+	export let ariaLabel: string = '';
+</script>
+
+<button
+	class="w-10 h-10 flex items-center justify-center outline-none text-white hover:bg-gray-600/50 focus:bg-gray-600/50 hover:shadow focus:shadow transition-all duration-200"
+	on:click={onClick}
+	use:tooltip={tooltipText}
+	aria-label={$tooltipText ? $tooltipText : ariaLabel}
+>
+	<Icon src={icon} size="20" />
+</button>
