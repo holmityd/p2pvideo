@@ -14,6 +14,8 @@ export function initPeer() {
 export function initializeRoom(peer: Peer, id: string): void {
     const room = get(roomKeyStore);
 
+    console.log(secret + room, id);
+
     if (room && secret + room !== id) {
         // Connect to host
         // new UserEvents(peer.connect(secret + room));

@@ -1,6 +1,6 @@
 import type { DataConnection, Peer } from 'peerjs';
 import { generateName, secret } from './peerName';
-import { userIdStore, peersStore } from './peerStore';
+import { userIdStore, peersStore, hostAlreadyConnectedStore } from './peerStore';
 import { get } from 'svelte/store';
 import { HostEvents } from './classes/hostEvents';
 import { UserEvents } from './classes/userEvents';
@@ -8,6 +8,7 @@ import { connections } from './peerConnection';
 import { initializeRoom } from '../room/roomService';
 import type { RouterData } from './dto/routerDto';
 import { dev } from '$app/environment';
+import { roomKeyStore } from '../room/roomStore';
 interface PeerError extends Error {
     type?: string;
 }
@@ -15,7 +16,8 @@ interface PeerError extends Error {
 let peer: Peer;
 
 export function initializePeer(PeerConstructor: typeof Peer): void {
-    const myIdLs = dev ? generateName() : localStorage.getItem('id');
+    const myIdLs = localStorage.getItem('id');
+    // const myIdLs = dev ? generateName() : localStorage.getItem('id');
     createPeer(PeerConstructor, myIdLs ? myIdLs : generateName());
 }
 
@@ -42,8 +44,14 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
                 console.warn('peer-unavailable');
                 break;
             case 'unavailable-id':
-                peer.destroy();
-                createPeer(PeerConstructor);
+                const room = secret + get(roomKeyStore);
+                // const room = get(roomKeyStore);
+                if (storageId == room) {
+                    hostAlreadyConnectedStore.set(true);
+                } else {
+                    peer.destroy();
+                    createPeer(PeerConstructor);
+                }
                 break;
             default:
                 console.warn(err);
@@ -53,6 +61,7 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
 
 export function connectToHostPeer(room: string | undefined): void {
     if (!room) return;
+    console.log(secret + room);
     const conn = peer.connect(secret + room);
     new UserEvents(conn);
 }
