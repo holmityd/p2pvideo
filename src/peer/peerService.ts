@@ -1,6 +1,6 @@
 import type { DataConnection, Peer } from 'peerjs';
 import { generateName, secret } from './peerName';
-import { userIdStore, peersStore, hostAlreadyConnectedStore } from './peerStore';
+import { userIdStore, peersStore } from './peerStore';
 import { get } from 'svelte/store';
 import { HostEvents } from './classes/hostEvents';
 import { UserEvents } from './classes/userEvents';
@@ -8,7 +8,7 @@ import { connections } from './peerConnection';
 import { initializeRoom } from '../room/roomService';
 import type { RouterData } from './dto/routerDto';
 import { dev } from '$app/environment';
-import { roomKeyStore } from '../room/roomStore';
+import { roomKeyStore, hostAlreadyConnectedStore } from '../room/roomStore';
 interface PeerError extends Error {
     type?: string;
 }
@@ -38,15 +38,13 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
 
     peer.on('error', (error) => {
         const err = error as PeerError;
-        // console.dir(err);
         switch (err.type) {
             case 'peer-unavailable':
                 console.warn('peer-unavailable');
                 break;
             case 'unavailable-id':
                 const room = secret + get(roomKeyStore);
-                // const room = get(roomKeyStore);
-                if (storageId == room) {
+                if (storageId == room) {    // is host check
                     hostAlreadyConnectedStore.set(true);
                 } else {
                     peer.destroy();
@@ -61,7 +59,6 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
 
 export function connectToHostPeer(room: string | undefined): void {
     if (!room) return;
-    console.log(secret + room);
     const conn = peer.connect(secret + room);
     new UserEvents(conn);
 }
