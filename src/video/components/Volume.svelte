@@ -3,6 +3,7 @@
 	import IconButton from './IconButton.svelte';
 	import { SpeakerWave, SpeakerXMark } from 'svelte-hero-icons';
 	import { writable } from 'svelte/store';
+	import { VIDEO_MUTED } from '../../room/localStorageKeys';
 	export let video: HTMLVideoElement;
 
 	let volume = 100;
@@ -14,6 +15,10 @@
 	onMount(() => {
 		volume = video.volume * 100;
 		video.addEventListener('volumechange', updateVolume);
+		if (Boolean(Number(localStorage.getItem(VIDEO_MUTED)))) {
+			video.muted = true;
+			muted = true;
+		}
 	});
 
 	onDestroy(() => {
@@ -31,6 +36,7 @@
 	const muteToggle = () => {
 		video.muted = !video.muted;
 		muted = video.muted;
+		localStorage.setItem(VIDEO_MUTED, String(muted ? 1 : 0));
 	};
 
 	let tooltipText = writable('');

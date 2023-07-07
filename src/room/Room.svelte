@@ -37,7 +37,6 @@
 		});
 		videoSourceStore.set(roomControlUrl);
 		localStorage.setItem(VIDEO_SRC, roomControlUrl);
-		console.log('why puuk');
 		localStorage.setItem(VIDEO_TIME, String(0));
 	}
 

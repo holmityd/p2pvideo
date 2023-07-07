@@ -27,7 +27,6 @@ const router_actions: RouterActions = {
             videoElm.currentTime = timeline;
             videoElm.play();
         }
-
     },
     'pause_video': _ => {
         get(videoElmStore)?.pause();
@@ -37,7 +36,15 @@ const router_actions: RouterActions = {
         if (videoElm)
             videoElm.currentTime = timeline;
     },
-    'change_src': (src: string) => {
+    'change_src': ({ src, timeline, playing }) => {
         videoSourceStore.set(src);
+        const videoElm = get(videoElmStore);
+        if (videoElm && timeline) {
+            videoElm.addEventListener('loadeddata', () => {
+                videoElm.currentTime = timeline;
+                if (playing)
+                    videoElm.play();
+            });
+        }
     }
 }

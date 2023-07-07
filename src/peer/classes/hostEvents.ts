@@ -14,20 +14,25 @@ export class HostEvents extends PeerEvents {
             data: get(peersStore)
         });
 
-        // play if video playing
-        const videoElm = get(videoElmStore);
-        if (videoElm && !videoElm.paused) {
-            sendToOnePeer(this.conn, {
-                action: 'play_video',
-                data: videoElm.currentTime
-            });
-        }
-
         // change source
+        const videoElm = get(videoElmStore);
         sendToOnePeer(this.conn, {
             action: 'change_src',
-            data: get(videoSourceStore)
+            data: {
+                src: get(videoSourceStore),
+                timeline: videoElm?.currentTime,
+                playing: videoElm && !videoElm.paused
+            }
         });
+
+        // // play if video playing
+
+        // if (videoElm && !videoElm.paused) {
+        //     sendToOnePeer(this.conn, {
+        //         action: 'play_video',
+        //         data: videoElm.currentTime
+        //     });
+        // }
 
         super.open();
     }

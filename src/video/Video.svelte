@@ -67,7 +67,7 @@
 		<div
 			class="absolute left-0 w-full pt-0 pb-1 px-2 flex backdrop-blur bg-gray-800/50 {$controlsVisibleStore
 				? 'bottom-0'
-				: '-bottom-8'} transition-bottom duration-200"
+				: '-bottom-10'} transition-bottom duration-200"
 		>
 			{#if canControl}
 				<PlayButton {video} {canControl} />

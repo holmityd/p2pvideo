@@ -8,7 +8,8 @@
 		let src = url.trim();
 		if (!src) return;
 
-		src = src.split('.mp4')[0] + '.mp4';
+		if (src.indexOf('.mp4') != -1) src = src.split('.mp4')[0] + '.mp4';
+
 		dispatch('urlUpdated', src);
 		url = '';
 	}
