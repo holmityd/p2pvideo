@@ -19,7 +19,16 @@ export function initializeRoom(peer: Peer, id: string): void {
         // new UserEvents(peer.connect(secret + room));
     } else {
         ownerStore.set(true);
-        if (!room)
-            history.pushState({}, '', '/' + getName(id)); // Change path
+        if (!room) {
+            let currentPath = window.location.pathname; // This will be something like '/page/oldId'
+            let pathParts = currentPath.split('/'); // This will give ['','page','oldId']
+
+            // Replace 'oldId' with the new id
+            let name = getName(id);
+            pathParts[pathParts.length - 1] = name;
+
+            let newPath = pathParts.join('/'); // Reconstruct the path
+            history.pushState({}, '', newPath);
+        }
     }
 }
