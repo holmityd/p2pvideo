@@ -1,6 +1,7 @@
 // import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+const dev = process.argv.includes('dev');
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,6 +17,7 @@ const config = {
 			fallback: '200.html' // may differ from host to host
 		}),
 		paths: {
+			base: dev ? '' : process.env.BASE_PATH,
 			// base: process.env.NODE_ENV === 'production' ? '/p2pvideo' : '',
 		}
 	}
