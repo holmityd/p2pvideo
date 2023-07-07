@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { videoElmStore } from "../video/videoStore";
+import { videoElmStore, videoSourceStore } from "../video/videoStore";
 import type { RouterData } from "./dto/routerDto";
 import { addPeerToList, removePeerFromList } from "./peerService";
 
@@ -36,5 +36,8 @@ const router_actions: RouterActions = {
         const videoElm = get(videoElmStore);
         if (videoElm)
             videoElm.currentTime = timeline;
+    },
+    'change_src': (src: string) => {
+        videoSourceStore.set(src);
     }
 }

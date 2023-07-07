@@ -3,7 +3,7 @@ import { sendToOnePeer } from '../peerService';
 import { peersStore } from '../peerStore';
 import { PeerEvents } from './peerEvents';
 import { getName } from '../peerName';
-import { videoElmStore } from '../../video/videoStore';
+import { videoElmStore, videoSourceStore } from '../../video/videoStore';
 
 export class HostEvents extends PeerEvents {
 
@@ -22,6 +22,12 @@ export class HostEvents extends PeerEvents {
                 data: videoElm.currentTime
             });
         }
+
+        // change source
+        sendToOnePeer(this.conn, {
+            action: 'change_src',
+            data: get(videoSourceStore)
+        });
 
         super.open();
     }
