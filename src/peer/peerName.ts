@@ -18,10 +18,3 @@ export function generateName(): string {
 export function getName(str: string): string {
     return str.substring(secret.length);
 }
-
-// function generatePrefix(): string {
-//     const array = new Uint8Array(16);
-//     window.crypto.getRandomValues(array);
-//     const secretHex = Array.from(array).map(byte => byte.toString(16).padStart(2, '0')).join('');
-//     return secretHex;
-// }

@@ -1,16 +1,8 @@
 import { roomKeyStore, ownerStore } from './roomStore';
 import { get } from 'svelte/store';
 import { secret, getName } from '../peer/peerName';
-import type { Peer } from 'peerjs';
-import { initializePeer } from '../peer/peerService';
 
-export function initPeer() {
-    import('peerjs').then(({ Peer }) => {
-        initializePeer(Peer);
-    });
-}
-
-export function initializeRoom(peer: Peer, id: string): void {
+export function initializeRoom(id: string): void {
     const room = get(roomKeyStore);
 
     if (room && secret + room !== id) return;

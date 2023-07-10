@@ -33,7 +33,7 @@
 						{getName($userIdStore)}
 					</li>
 				{/if}
-				{#each $peersStore as item, index}
+				{#each $peersStore as item}
 					<li
 						class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-white mb-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-2 rounded-md"
 					>

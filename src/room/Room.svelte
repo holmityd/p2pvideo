@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { roomKeyStore, ownerStore, hostAlreadyConnectedStore } from './roomStore.js';
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
 
@@ -7,9 +7,8 @@
 	import Video from '../video/Video.svelte';
 	import RoomControl from './components/RoomControl.svelte';
 	import Chat from '../chat/Chat.svelte';
-	import { videoElmStore, videoSourceStore } from '../video/videoStore.js';
+	import { videoSourceStore } from '../video/videoStore.js';
 	import { VIDEO_SRC, VIDEO_TIME } from './localStorageKeys.js';
-	import { get } from 'svelte/store';
 
 	// peer
 	export let id: string | undefined = undefined;

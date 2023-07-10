@@ -7,9 +7,10 @@ import { UserEvents } from './classes/userEvents';
 import { connections } from './peerConnection';
 import { initializeRoom } from '../room/roomService';
 import type { RouterData } from './dto/routerDto';
-import { dev } from '$app/environment';
 import { roomKeyStore, hostAlreadyConnectedStore } from '../room/roomStore';
 import { SESSION_ID } from '../room/localStorageKeys';
+import { dev } from '$app/environment';
+
 interface PeerError extends Error {
     type?: string;
 }
@@ -17,8 +18,7 @@ interface PeerError extends Error {
 let peer: Peer;
 
 export function initializePeer(PeerConstructor: typeof Peer): void {
-    const myIdLs = localStorage.getItem(SESSION_ID);
-    // const myIdLs = dev ? generateName() : localStorage.getItem('id');
+    const myIdLs = dev ? generateName() : localStorage.getItem('id');
     createPeer(PeerConstructor, myIdLs ? myIdLs : generateName());
 }
 
@@ -30,7 +30,7 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
     peer.on('open', (id) => {
         localStorage.setItem(SESSION_ID, id);
         userIdStore.set(id);
-        initializeRoom(peer, id);
+        initializeRoom(id);
     });
 
     peer.on('connection', (conn) => {

@@ -28,7 +28,7 @@
 		video.addEventListener('pause', () => videoPausedStore.set(true));
 	});
 
-	let videoPauseUnsubscribe = videoPausedStore.subscribe((e) => controlDelayedHide());
+	let videoPauseUnsubscribe = videoPausedStore.subscribe(() => controlDelayedHide());
 
 	onDestroy(() => {
 		videoPauseUnsubscribe();
