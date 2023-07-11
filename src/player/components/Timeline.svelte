@@ -15,10 +15,13 @@
 
 	// Lifecycle hooks
 	onMount(() => {
-		video?.addEventListener('timeupdate', updateTimeline);
+		updateTimeline();
+		video.addEventListener('loadeddata', updateTimeline);
+		video.addEventListener('timeupdate', updateTimeline);
 	});
 	onDestroy(() => {
-		video?.removeEventListener('timeupdate', updateTimeline);
+		video.removeEventListener('loadeddata', updateTimeline);
+		video.removeEventListener('timeupdate', updateTimeline);
 	});
 </script>
 

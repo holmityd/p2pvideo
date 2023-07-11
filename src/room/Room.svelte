@@ -9,7 +9,6 @@
 	import Chat from '../chat/Chat.svelte';
 	import { videoSourceStore } from '../player/playerStore.js';
 	import { VIDEO_SRC, VIDEO_TIME } from './localStorageKeys.js';
-	import { dev } from '$app/environment';
 
 	// peer
 	export let id: string | undefined = undefined;
@@ -17,7 +16,7 @@
 		roomKeyStore.set(id);
 
 		const videoSrcLS = localStorage.getItem(VIDEO_SRC);
-		if (!dev && videoSrcLS) videoSourceStore.set(videoSrcLS);
+		if (videoSrcLS) videoSourceStore.set(videoSrcLS);
 
 		import('peerjs').then(({ Peer }) => {
 			initializePeer(Peer);

@@ -14,13 +14,20 @@
 	// Elements
 	let videoContainer: HTMLElement;
 	let video: HTMLVideoElement;
+	let showSkeleton = true;
+
+	$: if (src) {
+		showSkeleton = true;
+	}
 
 	// Lifecycle hooks
 	let videoPauseUnsubscribe = videoPausedStore.subscribe(() => controlDelayedHide());
 	onMount(() => {
 		videoElmStore.set(video);
 		video.controls = false;
+		showSkeleton = false;
 		video.addEventListener('loadeddata', () => {
+			showSkeleton = false;
 			const savedVideoTime = Number(localStorage.getItem(VIDEO_TIME));
 			if (savedVideoTime) video.currentTime = savedVideoTime;
 		});
@@ -38,11 +45,13 @@
 	on:mousemove={controlDelayedHide}
 	role="application"
 >
-	<video bind:this={video} {src} class="w-full">
+	<video bind:this={video} {src} class="w-full max-w-full h-full max-h-full">
 		<track kind="captions" srclang="en" src={subtitles} label="English" default />
 	</video>
 
-	<!-- <PlayerSkeleton /> -->
+	{#if showSkeleton}
+		<PlayerSkeleton />
+	{/if}
 
 	{#if video}
 		<VideoControls {video} {canControl} {videoContainer} />
