@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { formatTime } from '../videoService';
+	import { formatTime } from '../playerService';
 	export let video: HTMLVideoElement;
 
 	let currentTime = 0;

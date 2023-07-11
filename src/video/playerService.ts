@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { controlsVisibleStore, videoPausedStore } from "./videoStore";
+import { controlsVisibleStore, videoPausedStore } from "./playerStore";
 import { ownerStore } from "../room/roomStore";
 import { sendToAllPeers } from "../peer/peerService";
 

@@ -34,7 +34,8 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
     });
 
     peer.on('connection', (conn) => {
-        new HostEvents(conn);
+        const hostEvents = new HostEvents(conn);
+        hostEvents.setConnectionEvents();
     });
 
     peer.on('error', (error) => {
@@ -61,7 +62,8 @@ function createPeer(PeerConstructor: typeof Peer, storageId?: string): void {
 export function connectToHostPeer(room: string | undefined): void {
     if (!room) return;
     const conn = peer.connect(secret + room);
-    new UserEvents(conn);
+    const userEvents = new UserEvents(conn);
+    userEvents.setConnectionEvents();
 }
 
 

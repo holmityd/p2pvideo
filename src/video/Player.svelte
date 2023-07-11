@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { controlDelayedHide, togglePlay } from './videoService';
-	import { controlsVisibleStore, videoElmStore, videoPausedStore } from './videoStore';
+	import { controlDelayedHide, togglePlay } from './playerService';
+	import { controlsVisibleStore, videoElmStore, videoPausedStore } from './playerStore';
 
 	import PlayButton from './components/PlayButton.svelte';
 	import Volume from './components/Volume.svelte';
@@ -12,6 +12,7 @@
 	import { VIDEO_TIME } from '../room/localStorageKeys';
 
 	export let src: string = '';
+	export let subtitles: string = '';
 	export let canControl: boolean = false;
 
 	let videoContainer: HTMLElement;
@@ -42,7 +43,7 @@
 	role="application"
 >
 	<video bind:this={video} {src} class="w-full">
-		<track kind="captions" srclang="en" label="English" />
+		<track kind="captions" srclang="en" src={subtitles} label="English" default />
 	</video>
 
 	<div

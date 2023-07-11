@@ -4,11 +4,12 @@
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
 
 	// components
-	import Video from '../video/Video.svelte';
+	import Player from '../video/Player.svelte';
 	import RoomControl from './components/RoomControl.svelte';
 	import Chat from '../chat/Chat.svelte';
-	import { videoSourceStore } from '../video/videoStore.js';
+	import { videoSourceStore } from '../video/playerStore.js';
 	import { VIDEO_SRC, VIDEO_TIME } from './localStorageKeys.js';
+	import { dev } from '$app/environment';
 
 	// peer
 	export let id: string | undefined = undefined;
@@ -16,7 +17,7 @@
 		roomKeyStore.set(id);
 
 		const videoSrcLS = localStorage.getItem(VIDEO_SRC);
-		if (videoSrcLS) videoSourceStore.set(videoSrcLS);
+		if (!dev && videoSrcLS) videoSourceStore.set(videoSrcLS);
 
 		import('peerjs').then(({ Peer }) => {
 			initializePeer(Peer);
@@ -53,7 +54,7 @@
 <div class="flex flex-col">
 	<div class="flex h-screen">
 		<div class="relative flex-grow min-h-0">
-			<Video src={$videoSourceStore} canControl={$ownerStore} />
+			<Player src={$videoSourceStore} canControl={$ownerStore} />
 
 			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
 				<button

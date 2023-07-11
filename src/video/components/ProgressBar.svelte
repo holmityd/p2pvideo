@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { formatTime, setVideoTime } from '../videoService';
+	import { formatTime, setVideoTime } from '../playerService';
 	import { VIDEO_TIME } from '../../room/localStorageKeys';
 
 	export let video: HTMLVideoElement;

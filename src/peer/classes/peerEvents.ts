@@ -9,11 +9,13 @@ export class PeerEvents {
     constructor(conn: DataConnection) {
         this.conn = conn;
         this.peer = conn.provider;
+    }
 
-        conn.on('open', () => this.open());
-        conn.on('data', (data: any) => this.data(data));
-        conn.on('close', () => this.close());
-        conn.on('error', function (err) {
+    public setConnectionEvents(): void {
+        this.conn.on('open', () => this.open());
+        this.conn.on('data', (data: any) => this.data(data));
+        this.conn.on('close', () => this.close());
+        this.conn.on('error', function (err) {
             console.warn('An error occurred: ' + err.message);
         });
     }
@@ -30,8 +32,8 @@ export class PeerEvents {
         removeConnection(this.conn);
     }
 
-    protected reconnect(): DataConnection {
+    protected reconnect(): void {
         this.conn = this.peer.connect(this.conn.peer);
-        return this.conn;
+        this.setConnectionEvents();
     }
 }

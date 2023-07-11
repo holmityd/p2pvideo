@@ -2,10 +2,9 @@ import { get } from 'svelte/store';
 import { sendToOnePeer } from '../peerService';
 import { peersStore } from '../peerStore';
 import { PeerEvents } from './peerEvents';
-import { videoElmStore, videoSourceStore } from '../../video/videoStore';
+import { videoElmStore, videoSourceStore } from '../../video/playerStore';
 
 export class HostEvents extends PeerEvents {
-
     protected open(): void {
         // list of connected users
         sendToOnePeer(this.conn, {
@@ -25,13 +24,5 @@ export class HostEvents extends PeerEvents {
         });
 
         super.open();
-    }
-
-    protected data(data: string): void {
-        super.data(data);
-    }
-
-    protected close(): void {
-        super.close();
     }
 }

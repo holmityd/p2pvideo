@@ -1,8 +1,8 @@
 <script lang="ts">
 	import IconButton from './IconButton.svelte';
 	import { Pause, Play } from 'svelte-hero-icons';
-	import { togglePlay } from '../videoService';
-	import { videoPausedStore } from '../videoStore';
+	import { togglePlay } from '../playerService';
+	import { videoPausedStore } from '../playerStore';
 	import { writable } from 'svelte/store';
 
 	export let video: HTMLVideoElement;
