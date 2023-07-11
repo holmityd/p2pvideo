@@ -4,6 +4,7 @@
 	import { videoElmStore, videoPausedStore } from './playerStore';
 	import { VIDEO_TIME } from '../room/localStorageKeys';
 	import VideoControls from './components/VideoControls.svelte';
+	import PlayerSkeleton from './components/PlayerSkeleton.svelte';
 
 	// Props
 	export let src: string = '';
@@ -40,6 +41,8 @@
 	<video bind:this={video} {src} class="w-full">
 		<track kind="captions" srclang="en" src={subtitles} label="English" default />
 	</video>
+
+	<!-- <PlayerSkeleton /> -->
 
 	{#if video}
 		<VideoControls {video} {canControl} {videoContainer} />

@@ -13,11 +13,10 @@
 	}
 </script>
 
-<!-- arrow-left-on-rectangle -->
 <div class="relative flex flex-col {!hide ? 'w-60' : 'w-0'}">
 	<button
 		class="absolute top-4 {!hide ? 'left-4' : '-left-8'} text-white"
-		use:tooltip={buttonText}
+		use:tooltip={{ tooltipText: buttonText, position: 'left' }}
 		on:click={toggleHide}
 	>
 		<Icon src={!hide ? ArrowRightOnRectangle : ArrowLeftOnRectangle} size="20" />
