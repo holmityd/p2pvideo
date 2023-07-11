@@ -4,10 +4,10 @@
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
 
 	// components
-	import Player from '../video/Player.svelte';
+	import Player from '../player/Player.svelte';
 	import RoomControl from './components/RoomControl.svelte';
 	import Chat from '../chat/Chat.svelte';
-	import { videoSourceStore } from '../video/playerStore.js';
+	import { videoSourceStore } from '../player/playerStore.js';
 	import { VIDEO_SRC, VIDEO_TIME } from './localStorageKeys.js';
 	import { dev } from '$app/environment';
 

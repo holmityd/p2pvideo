@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+
+	// Props
 	export let video: HTMLVideoElement;
 	let isLoading = false;
+
+	// Lifecycle hooks
 	onMount(() => {
 		video.addEventListener('seeking', () => {
 			isLoading = true;

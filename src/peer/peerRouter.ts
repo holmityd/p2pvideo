@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { videoElmStore, videoSourceStore } from "../video/playerStore";
+import { videoElmStore, videoSourceStore } from "../player/playerStore";
 import type { RouterData } from "./dto/routerDto";
 import { addPeerToList, removePeerFromList } from "./peerService";
 

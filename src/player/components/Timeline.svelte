@@ -1,23 +1,25 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { formatTime } from '../playerService';
+
+	// Props
 	export let video: HTMLVideoElement;
 
+	// Time update
 	let currentTime = 0;
 	let duration = 0;
-
-	onMount(() => {
-		video?.addEventListener('timeupdate', updateTimeline);
-	});
-
-	onDestroy(() => {
-		video?.removeEventListener('timeupdate', updateTimeline);
-	});
-
 	function updateTimeline(): void {
 		currentTime = video.currentTime;
 		duration = video.duration;
 	}
+
+	// Lifecycle hooks
+	onMount(() => {
+		video?.addEventListener('timeupdate', updateTimeline);
+	});
+	onDestroy(() => {
+		video?.removeEventListener('timeupdate', updateTimeline);
+	});
 </script>
 
 <div class="flex text-xs space-x-2 items-center text-white">

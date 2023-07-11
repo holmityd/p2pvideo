@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import { sendToOnePeer } from '../peerService';
 import { peersStore } from '../peerStore';
 import { PeerEvents } from './peerEvents';
-import { videoElmStore, videoSourceStore } from '../../video/playerStore';
+import { videoElmStore, videoSourceStore } from '../../player/playerStore';
 
 export class HostEvents extends PeerEvents {
     protected open(): void {
