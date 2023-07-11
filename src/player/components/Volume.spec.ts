@@ -32,6 +32,6 @@ describe('Volume', () => {
         const { getByRole } = render(Volume, { props: { video } });
         const volumeSlider = getByRole('slider') as HTMLInputElement;
         fireEvent.volumeChange(video, { target: { volume: 0.6 } });
-        // expect(volumeSlider.value).toBe('60');
+        expect(volumeSlider.value).toBe('60');
     });
 });
