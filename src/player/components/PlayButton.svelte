@@ -7,7 +7,6 @@
 
 	// Props
 	export let video: HTMLVideoElement;
-	export let canControl: boolean;
 
 	// Stores
 	const tooltipText: Writable<string> = writable();
@@ -22,7 +21,7 @@
 
 	// Events
 	function onClick() {
-		togglePlay(video, canControl);
+		togglePlay(video);
 	}
 </script>
 

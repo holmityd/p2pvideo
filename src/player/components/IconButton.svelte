@@ -11,7 +11,7 @@
 </script>
 
 <button
-	class="w-10 h-10 flex items-center justify-center outline-none text-white hover:bg-gray-600/50 focus:bg-gray-600/50 hover:shadow focus:shadow transition-all duration-200"
+	class="w-10 h-10 flex items-center justify-center outline-none text-white hover:bg-gray-600/50 hover:shadow transition-all duration-200"
 	on:click={onClick}
 	use:tooltip={{ tooltipText }}
 	aria-label={$tooltipText ? $tooltipText : ariaLabel}

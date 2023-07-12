@@ -17,6 +17,7 @@
 	<button
 		class="absolute top-4 {!hide ? 'left-4' : '-left-8'} text-white"
 		use:tooltip={{ tooltipText: buttonText, position: 'left' }}
+		aria-label={$buttonText}
 		on:click={toggleHide}
 	>
 		<Icon src={!hide ? ArrowRightOnRectangle : ArrowLeftOnRectangle} size="20" />
