@@ -79,6 +79,7 @@
 				on:input={handleVolumeChange}
 				class="w-full h-full opacity-0 appearance-none absolute top-0 left-0"
 				tabindex="-1"
+				aria-label="volume"
 			/>
 			<div
 				class="h-full bg-green-500 transition-width duration-100"
