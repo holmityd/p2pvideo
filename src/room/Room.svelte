@@ -50,9 +50,10 @@
 	}
 </script>
 
-<div class="flex flex-col">
-	<div class="flex h-screen">
-		<div class="relative flex-grow min-h-0">
+<div class="flex">
+	<div class="flex flex-col flex-grow">
+		<!-- player -->
+		<div class="h-screen relative">
 			<Player src={$videoSourceStore} canControl={$ownerStore} />
 
 			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
@@ -75,9 +76,11 @@
 				</button>
 			{/if}
 		</div>
-		<Chat />
+		<!-- control -->
+		{#if $ownerStore}
+			<RoomControl on:urlUpdated={handleUrlUpdated} />
+		{/if}
 	</div>
-	{#if $ownerStore}
-		<RoomControl on:urlUpdated={handleUrlUpdated} />
-	{/if}
+
+	<Chat />
 </div>
