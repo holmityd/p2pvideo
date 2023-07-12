@@ -9,6 +9,7 @@ export function initializeRoom(id: string): void {
         ownerStore.set(false);
         return;
     }
+    roomKeyStore.set(getName(id));
     ownerStore.set(true);
     if (!room) {
         const pathParts = window.location.pathname.split('/');

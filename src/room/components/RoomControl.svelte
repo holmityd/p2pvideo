@@ -31,6 +31,7 @@
             p-2 border-2 rounded focus:outline-none
             text-white bg-gray-950 border-black focus:border-green-500"
 			placeholder="Video link"
+			aria-label="Video link"
 		/>
 		<button
 			on:click={send}
