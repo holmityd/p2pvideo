@@ -1,18 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { manageEventListeners } from '../playerService';
 
 	// Props
 	export let video: HTMLVideoElement;
 	let isLoading = false;
 
+	// Event listeners
+	function loadingEvents(event: Event) {
+		isLoading = event.type == 'seeking';
+	}
+
 	// Lifecycle hooks
 	onMount(() => {
-		video.addEventListener('seeking', () => {
-			isLoading = true;
-		});
-		video.addEventListener('seeked', () => {
-			isLoading = false;
-		});
+		manageEventListeners(video, ['seeking', 'seeked'], loadingEvents, true);
+	});
+	onDestroy(() => {
+		manageEventListeners(video, ['seeking', 'seeked'], loadingEvents, false);
 	});
 </script>
 

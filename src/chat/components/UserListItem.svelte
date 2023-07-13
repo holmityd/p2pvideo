@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Icon, VideoCamera } from 'svelte-hero-icons';
-	import { roomKeyStore } from '../room/roomStore';
+	import { roomKeyStore } from '../../room/roomStore';
 
 	export let name: string;
 </script>

@@ -3,6 +3,7 @@
 	import { ArrowsPointingOut, ArrowsPointingIn, type IconSource } from 'svelte-hero-icons';
 	import IconButton from './IconButton.svelte';
 	import { writable, type Writable } from 'svelte/store';
+	import { manageEventListeners } from '../playerService';
 
 	// Props
 	export let videoContainer: HTMLElement;
@@ -56,16 +57,20 @@
 
 	// Lifecycle hooks
 	onMount(() => {
-		document.addEventListener('fullscreenchange', updateFullscreenMode);
-		document.addEventListener('webkitfullscreenchange', updateFullscreenMode);
-		document.addEventListener('mozfullscreenchange', updateFullscreenMode);
-		document.addEventListener('MSFullscreenChange', updateFullscreenMode);
+		manageEventListeners(
+			document,
+			['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'],
+			updateFullscreenMode,
+			true
+		);
 	});
 	onDestroy(() => {
-		document.removeEventListener('fullscreenchange', updateFullscreenMode);
-		document.removeEventListener('webkitfullscreenchange', updateFullscreenMode);
-		document.removeEventListener('mozfullscreenchange', updateFullscreenMode);
-		document.removeEventListener('MSFullscreenChange', updateFullscreenMode);
+		manageEventListeners(
+			document,
+			['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'],
+			updateFullscreenMode,
+			false
+		);
 	});
 </script>
 

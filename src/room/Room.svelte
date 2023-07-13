@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { roomKeyStore, ownerStore, hostAlreadyConnectedStore } from './roomStore.js';
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
+	import { Button } from 'flowbite-svelte';
 
 	// components
 	import Player from '../player/Player.svelte';
@@ -56,7 +57,7 @@
 		<div class="h-screen relative">
 			<Player src={$videoSourceStore} canControl={$ownerStore} />
 
-			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
+			<!-- {#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
 				<button
 					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
 							px-8 py-2 rounded outline-none
@@ -74,6 +75,20 @@
 					on:click={refresh}
 					>Host client already running. Refresh page to reconnect
 				</button>
+			{/if} -->
+			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
+				<Button
+					color="green"
+					on:click={join}
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Join</Button
+				>
+			{/if}
+			{#if $hostAlreadyConnectedStore}
+				<Button
+					on:click={refresh}
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+					>Host client already running. Refresh page to reconnect</Button
+				>
 			{/if}
 		</div>
 		<!-- control -->

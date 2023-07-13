@@ -7,7 +7,13 @@
 	import Timeline from './Timeline.svelte';
 	import FullscreenButton from './FullscreenButton.svelte';
 	import ProgressBar from './ProgressBar.svelte';
-	import { togglePlay, setVideoTime, controlDelayedHide } from '../playerService';
+	import {
+		togglePlay,
+		setVideoTime,
+		controlDelayedHide,
+		manageEventListeners,
+		toggleMute
+	} from '../playerService';
 	import Loading from './Loading.svelte';
 
 	// Props
@@ -18,7 +24,7 @@
 	function handleKeyPress(event: KeyboardEvent) {
 		const activeElement = document.activeElement;
 		const isInputFocused = activeElement && activeElement.tagName === 'INPUT';
-		const keys = [' ', 'k', 'j', 'k', 'l', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+		const keys = [' ', 'k', 'j', 'k', 'l', 'm', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
 		if (!isInputFocused && keys.indexOf(event.key) != -1) {
 			event.preventDefault();
 			controlDelayedHide();
@@ -32,6 +38,9 @@
 					break;
 				case 'l':
 					jump(+10);
+					break;
+				case 'm':
+					toggleMute(video);
 					break;
 				case 'ArrowLeft':
 					jump(-5);
@@ -65,10 +74,10 @@
 
 	// Lifecycle hooks
 	onMount(() => {
-		document.addEventListener('keydown', handleKeyPress);
+		manageEventListeners(document, ['keydown'], handleKeyPress as EventListener, true);
 	});
 	onDestroy(() => {
-		document.removeEventListener('keydown', handleKeyPress);
+		manageEventListeners(document, ['keydown'], handleKeyPress as EventListener, false);
 	});
 </script>
 

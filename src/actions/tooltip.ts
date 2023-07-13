@@ -15,6 +15,8 @@ export function tooltip(node: HTMLElement, { tooltipText, position = 'top' }: { 
     function mouseenter() {
         const { top, left, width, height } = node.getBoundingClientRect();
         tooltipElem = document.createElement('div');
+        tooltipElem.setAttribute('aria-live', 'polite');
+        tooltipElem.setAttribute('aria-atomic', 'true');
         tooltipElem.className = 'fixed bg-gray-800 shadow-sm text-xs font-medium text-white px-2 py-1 rounded text-white z-10';
 
         // Calculate position based on the 'position' parameter

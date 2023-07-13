@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getName } from '../peer/peerName';
-	import { peersStore, userIdStore } from '../peer/peerStore';
+	import { getName } from '../../peer/peerName';
+	import { peersStore, userIdStore } from '../../peer/peerStore';
 	import UserListItem from './UserListItem.svelte';
 </script>
 

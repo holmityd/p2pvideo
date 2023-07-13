@@ -4,6 +4,8 @@
 	import { SpeakerWave, SpeakerXMark, type IconSource } from 'svelte-hero-icons';
 	import { VIDEO_VOLUME } from '../../room/localStorageKeys';
 	import { writable, type Writable } from 'svelte/store';
+	import { alertAdd } from '../../alert/alertService';
+	import { manageEventListeners, toggleMute } from '../playerService';
 
 	// Props
 	export let video: HTMLVideoElement;
@@ -20,27 +22,20 @@
 	}
 
 	// Mute button
-	let previousVolumeLevel = 100;
 	function onClick(): void {
-		if (!volumeLevel) {
-			volumeLevel = previousVolumeLevel;
-		} else {
-			previousVolumeLevel = volumeLevel;
-			volumeLevel = 0;
-		}
-		applyVolumeToVideo();
+		toggleMute(video);
 	}
 
 	// Volume slider
 	let volumeLevel = 100;
-	function handleVolumeChange(event: Event): void {
-		const target = event.target as HTMLInputElement;
-		volumeLevel = parseFloat(target.value);
-		applyVolumeToVideo();
-	}
 	function applyVolumeToVideo(): void {
-		video.volume = volumeLevel / 100;
-		updateMuteStatusAndLocalStorage();
+		try {
+			if (!video) throw new Error('Failed to sync volume with video');
+			video.volume = volumeLevel / 100;
+			updateMuteStatusAndLocalStorage();
+		} catch (error: any) {
+			alertAdd(error.message);
+		}
 	}
 	function syncVolumeWithVideo(): void {
 		volumeLevel = video.volume * 100;
@@ -55,7 +50,7 @@
 
 	// Lifecycle hooks
 	onMount(() => {
-		video.addEventListener('volumechange', syncVolumeWithVideo);
+		manageEventListeners(video, ['volumechange'], syncVolumeWithVideo, true);
 		const volumeFromLocalStorage = Number(localStorage.getItem(VIDEO_VOLUME));
 		if (volumeFromLocalStorage != undefined) {
 			volumeLevel = volumeFromLocalStorage;
@@ -63,7 +58,7 @@
 		}
 	});
 	onDestroy(() => {
-		video.removeEventListener('volumechange', syncVolumeWithVideo);
+		manageEventListeners(video, ['volumechange'], syncVolumeWithVideo, false);
 	});
 </script>
 
@@ -76,7 +71,7 @@
 				min="0"
 				max="100"
 				bind:value={volumeLevel}
-				on:input={handleVolumeChange}
+				on:input={applyVolumeToVideo}
 				class="w-full h-full opacity-0 appearance-none absolute top-0 left-0"
 				tabindex="-1"
 				aria-label="volume"

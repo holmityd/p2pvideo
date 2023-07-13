@@ -16,6 +16,8 @@ async function readDir(rootDir) {
                 await readDir(fullPath);
             } else if (file.isFile()) {
                 const content = await fs.readFile(fullPath, 'utf8');
+                if (fullPath.indexOf('.spec.ts') != -1)
+                    break;
                 console.log(`Path: ${fullPath}`);
                 console.log(`Content: \n${content}\n`);
             }
@@ -25,5 +27,5 @@ async function readDir(rootDir) {
     }
 }
 
-const rootDir = path.resolve(process.argv[2] || './src'); // takes directory from arguments or uses current directory
+const rootDir = path.resolve(process.argv[2] || './src/player'); // takes directory from arguments or uses current directory
 readDir(rootDir);

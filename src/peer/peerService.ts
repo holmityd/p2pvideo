@@ -18,7 +18,8 @@ interface PeerError extends Error {
 let peer: Peer;
 
 export function initializePeer(PeerConstructor: typeof Peer): void {
-    const myIdLs = dev ? generateName() : localStorage.getItem('id');
+    // const myIdLs = localStorage.getItem(SESSION_ID);
+    const myIdLs = dev ? generateName() : localStorage.getItem(SESSION_ID);
     createPeer(PeerConstructor, myIdLs ? myIdLs : generateName());
 }
 

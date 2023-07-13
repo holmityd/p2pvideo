@@ -47,6 +47,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"peerjs": "^1.4.7"
+		"@popperjs/core": "^2.11.8",
+		"flowbite": "^1.7.0",
+		"flowbite-svelte": "^0.39.2",
+		"peerjs": "^1.4.7",
+		"tailwind-merge": "^1.13.2"
 	}
 }

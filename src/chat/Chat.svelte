@@ -2,7 +2,7 @@
 	import { Icon, ArrowLeftOnRectangle, ArrowRightOnRectangle } from 'svelte-hero-icons';
 	import { tooltip } from '../actions/tooltip';
 	import { writable } from 'svelte/store';
-	import UserList from './UserList.svelte';
+	import UserList from './components/UserList.svelte';
 
 	let hide = false;
 	$: buttonText.set(!hide ? 'collapse' : 'expand');
