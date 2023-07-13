@@ -189,7 +189,7 @@
 	role="progressbar"
 	aria-valuemin={0}
 	aria-valuemax={100}
-	aria-valuenow={$progress}
+	aria-valuenow={$progress | 0}
 >
 	<span class="absolute bottom-0 left-0 w-full h-2.5" />
 	<div class="pointer-events-none">
