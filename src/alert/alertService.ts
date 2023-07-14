@@ -32,5 +32,5 @@ export function alertDelete(message: string): void {
             n.splice(index, 1);
             return n;
         });
-    }, 500); // animation delay + 100
+    }, 300);
 }

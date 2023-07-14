@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { roomKeyStore, ownerStore, hostAlreadyConnectedStore } from './roomStore.js';
 	import { connectToHostPeer, initializePeer, sendToAllPeers } from '../peer/peerService.js';
-	import { Button } from 'flowbite-svelte';
 
 	// components
 	import Player from '../player/Player.svelte';
@@ -52,43 +51,29 @@
 </script>
 
 <div class="flex">
-	<div class="flex flex-col flex-grow">
+	<div class="flex flex-grow flex-col">
 		<!-- player -->
-		<div class="h-screen relative">
+		<div class="relative h-screen">
 			<Player src={$videoSourceStore} canControl={$ownerStore} />
 
-			<!-- {#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
+			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
 				<button
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-							px-8 py-2 rounded outline-none
-							text-white bg-green-600 hover:bg-green-700
-							transition-all duration-200"
+					class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+							rounded bg-green-600 px-8 py-2
+							text-white outline-none transition-all
+							duration-200 hover:bg-green-700"
 					on:click={join}>Join</button
 				>
 			{/if}
 			{#if $hostAlreadyConnectedStore}
 				<button
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-							px-8 py-2 rounded outline-none
-							text-white bg-orange-600 hover:bg-orange-700
-							transition-all duration-200"
+					class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+							rounded bg-orange-600 px-8 py-2
+							text-white outline-none transition-all
+							duration-200 hover:bg-orange-700"
 					on:click={refresh}
 					>Host client already running. Refresh page to reconnect
 				</button>
-			{/if} -->
-			{#if !$ownerStore && !joined && !$hostAlreadyConnectedStore}
-				<Button
-					color="green"
-					on:click={join}
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Join</Button
-				>
-			{/if}
-			{#if $hostAlreadyConnectedStore}
-				<Button
-					on:click={refresh}
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-					>Host client already running. Refresh page to reconnect</Button
-				>
 			{/if}
 		</div>
 		<!-- control -->

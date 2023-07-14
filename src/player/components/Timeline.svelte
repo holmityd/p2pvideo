@@ -24,9 +24,9 @@
 </script>
 
 <div class="flex text-xs space-x-2 items-center text-white">
-	<span>{formatTime(currentTime)}</span>
 	{#if duration}
+		<span>{formatTime(currentTime)}</span>
 		<span>/</span>
+		<span>{formatTime(duration)}</span>
 	{/if}
-	<span>{formatTime(duration)}</span>
 </div>
